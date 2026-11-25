@@ -1,0 +1,87 @@
+import React, { useState, useEffect } from 'react';
+import HomeLayout from '../../components/Index/HomeLayout';
+import Link from "next/link";
+import VideoPlayer from "../../components/Projects/VideoPlayer"
+import projects from '../../data/projects';
+
+export default function Project({ project }) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkIsMobile = () => {
+            const userAgent = window.navigator.userAgent;
+            setIsMobile(/iPhone|iPad|iPod|Android/i.test(userAgent));
+        };
+
+        checkIsMobile();
+
+        window.addEventListener("resize", checkIsMobile);
+
+        return () => {
+            window.removeEventListener("resize", checkIsMobile);
+        };
+    }, []);
+
+    if (!project) {
+        return null;
+    }
+
+    return (
+        <HomeLayout>
+            <div className='min-h-screen bg-white bg-cover bg-no-repeat flex items-center justify-center'>
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-300 to-transparent">
+                </div>
+                <Link href="/projects" className="absolute top-32 left-16 z-30 underline text-black px-4 py-2 rounded-md ">← Go Back</Link>
+                    <div className={`flex flex-col text-center text-l items-center justify-center z-20 relative pt-40 text-black p-4 space-y-6 ${isMobile ? "" : "w-1/2"} `}>
+                        <h1 className="text-6xl">{project.name}</h1>
+                        <div className="">{project.subtitle}</div>
+                        <VideoPlayer link={project.video} />
+                        <div className="flex flex-col" >
+                        {project.website && project.website !== "" && (
+                            <Link href={project.website} target='_blank' className="rounded-lg p-2 underline">Website →</Link>
+                        )}
+                        {project.facebook && project.facebook !== "" && (
+                            <Link href={project.facebook} target='_blank' className="rounded-lg p-2 underline">Facebook →</Link>
+                        )}
+                        {project.app && project.app !== "" && (
+                            <Link href={project.app} target='_blank' className="rounded-lg p-2 underline">Download our App →</Link>
+                        )}</div>
+                        {project.mission_statement && project.mission_statement !== "" && (
+                            <div className=" text-center text-xl p-4">{project.mission_statement}</div>
+                        )}
+                        {project.about && project.about !== "" && (
+                            <div className=" text-center text-xl p-4">{project.about}</div>
+                        )}
+                        {project.module1 && project.module1 !== "" && (
+                            <div className=" text-center text-xl p-4">{project.module1}</div>
+                        )}
+                        {project.module2 && project.module2 !== "" && (
+                            <div className=" text-center text-xl p-4">{project.module2}</div>
+                        )}
+                        {project.module3 && project.module3 !== "" && (
+                            <div className=" text-center text-xl p-4">{project.module3}</div>
+                        )}
+                        <div className=" text-center text-xl p-4">{project.blurb}</div>
+                    </div>
+                </div>
+            <div className='bg-color grid pb-20 items-center justify-center'>
+            <Link href="/projects" className="z-30 underline text-black px-4 py-2 rounded-md "></Link>
+            </div>
+        </HomeLayout>
+    )
+}
+
+export function getStaticPaths() {
+    return {
+        paths: projects.map((project) => ({ params: { slug: project.slug } })),
+        fallback: false,
+    };
+}
+
+export function getStaticProps({ params }) {
+    const project = projects.find((item) => item.slug === params.slug) || null;
+
+    return {
+        props: { project },
+    };
+}

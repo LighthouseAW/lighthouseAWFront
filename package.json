@@ -1,0 +1,31 @@
+{
+  "name": "lighthouse-fe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@formspree/react": "^2.5.5",
+    "@headlessui/react": "^1.7.19",
+    "autoprefixer": "10.7.0",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.5.11",
+    "next": "13.5.11",
+    "postcss": "8.5.33",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-player": "^2.16.1",
+    "react-slick": "^0.29.0",
+    "react-youtube": "^10.1.0",
+    "sharp": "0.35.5",
+    "slick-carousel": "^1.8.1",
+    "tailwindcss": "3.4.19",
+    "typescript": "^5.9.3",
+    "react-icons": "^4.12.0"
+  },
+  "devDependencies": {}
+}
